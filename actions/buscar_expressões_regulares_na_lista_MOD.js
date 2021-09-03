@@ -47,7 +47,7 @@ module.exports = {
 		</div>
 	</div><br><br><br>
 	<div style="padding-top: 8px;">
-		Procurar textos incluso em algum item:<br>
+		Procurar expressão regular:<br>
 		<textarea id="item" rows="4" class="round" placeholder="Insira uma variável ou algum texto. Você pode usar expressões regulares aqui, exemplos\n(um,dois,tres)\nCaso coloque isso se o texto possuir um, dois ou três irá retornar a posição do item" style="width: 94%; font-family: monospace;  "></textarea>	</div><br>
 	<div style="padding-top: 8px;">
 		<div style="float: left; width: 35%;">
