@@ -1,0 +1,227 @@
+:root {
+
+	--mark-versao: var(--config-versao);
+
+	/* Corpo das actions, eventos e comandos */
+	--mark-fa: var(--config-fa);
+	--mark-bordaaction: var(--config-bordaaction);
+
+	/* Corpo da página */
+	--mark-cordofundo4: var(--config-cordofundo4);
+	--mark-textos: var(--config-textos);
+	--mark-corpoespaco: var(--config-corpoespaco);
+
+	/* Botões do Menu */
+	--mark-bmfundo: var(--config-bmfundo);
+    --mark-bmtexto: var(--config-bmtexto);
+    --mark-bmfundohover: var(--config-bmfundohover);
+    --mark-bmtextohover: var(--config-bmtextohover);
+    --mark-bmfundoativo: var(--config-bmfundoativo);
+    --mark-bmtextoativo: var(--config-bmtextoativo);
+	--mark-bmespaco: var(--config-bmespaco);
+
+	/* Botões das actions,eventos e comandos */ 
+	--mark-ba: var(--config-ba);
+	--mark-bah: var(--config-bah);
+	--mark-bahtxt: var(--config-bahtxt);
+	--mark-baativo: var(--config-baativo);
+	--mark-baativotxt: var(--config-baativotxt);
+	--mark-bcor: var(--config-bcor);
+	--mark-botaoespaco: var(--config-botaoespaco);
+
+	/* Marcador de comandos e eventos */
+	--mark-color: var(--config-marcador);
+	--mark-colortxt: var(--config-marcadortxt);
+
+	/* Notas */
+	--mark-notasfundo: var(--config-notasfundo);
+	--mark-notastxt: var(--config-notastxt);
+
+	/* Barra de rolagem */
+	--mark-rolfundo: var(--config-rolfundo);
+    --mark-rolbarra: var(--config-rolbarra);
+    --mark-rolbarraativa: var(--config-rolbarraativa);
+    --mark-rolbotoes: var(--config-rolbotoes);
+    --mark-rolbotoesonoff: var(--config-rolbotoesonoff);
+    --mark-rolborda: var(--config-rolborda);
+	--mark-roltamanho: var(--config-roltamanho);
+
+	/* Botões */
+	--mark-bfundo: var(--config-bfundo);
+    --mark-btexto: var(--config-btexto);
+    --mark-bfundohover: var(--config-bfundohover);
+    --mark-btextohover: var(--config-btextohover);
+
+	--mark-fundo: var(--config-fundo);
+	--mark-fundo2: var(--config-fundo2);
+	--mark-caixafundo: var(--config-caixafundo);
+	--mark-bordacaixa: var(--config-bordacaixa);
+	--mark-textocaixa: var(--config-textocaixa);
+
+	--mark-bordanotas: var(--config-bordanotas);
+
+
+	
+}
+mark {
+  background-color: var(--mark-color) !important;
+  color: var(--mark-colortxt) !important;
+}
+
+	/* Corpo das actions, eventos e comandos */
+	div.myactions {overflow-y: auto;overflow-x: hidden;background-color: var(--mark-fa);border: var(--mark-bordaaction)}
+	div.emyactions {overflow-y: auto;overflow-x: hidden;background-color: var(--mark-fa);border: var(--mark-bordaaction)}
+
+	/* Corpo da página */
+	.textoxin{background:var(--mark-cordofundo4);padding:2px var(--mark-corpoespaco)}
+	esp{padding:0px 0px 0px var(--mark-corpoespaco)}
+
+	/* Botões do Menu */
+	.savebmfundo{background: var(--mark-bmfundo);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.savebmtexto{background: var(--mark-bmtexto);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.savebmfundohover{background: var(--mark-bmfundohover);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.savebmtextohover{background: var(--mark-bmtextohover);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.savebmfundoativo{background: var(--mark-bmfundoativo);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.savebmtextoativo{background: var(--mark-bmtextoativo);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	#id_tabs button{background: var(--mark-bmfundo);color:var(--mark-bmtexto);margin: 0px var(--mark-bmespaco) 0px 0px}
+	#id_tabs button:hover{background: var(--mark-bmfundohover);color:var(--mark-bmtextohover)}
+	#id_tabs button.active{background: var(--mark-bmfundoativo);color:var(--mark-bmtextoativo)}
+
+	.ui.icon.button{background: var(--mark-bmfundo);color:var(--mark-bmtexto);margin: 0px var(--mark-bmespaco) 0px 0px}
+	.ui.icon.button{background: var(--mark-bmfundohover);color:var(--mark-bmtextohover)}
+	.ui.icon.button{background: var(--mark-bmfundoativo);color:var(--mark-bmtextoativo)}
+
+	.header{background:var(--config-fundo2) !important} 
+
+	/* Botões das actions,eventos e comandos */ 
+	.saveba{background: var(--mark-ba);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.savebh{background: var(--mark-bah);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.savebhtxt{background: var(--mark-bahtxt);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.savebat{background: var(--mark-baativo);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.savebattxt{background: var(--mark-baativotxt);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.savebcor{background: var(--mark-bcor);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	div.myactions button {background-color: var(--mark-ba);color: var(--mark-bcor) }
+	div.myactions button:hover {background-color: var(--mark-bah);color: var(--mark-bahtxt);border-left: 5px solid rgba(255, 255, 255, 0.103);}
+	div.myactions button.active {background-color: var(--mark-baativo);color: var(--mark-baativotxt);border-left: 5px solid rgba(255, 255, 255, 0.103);}
+	div.emyactions button {background-color: var(--mark-ba);color: var(--mark-bcor) }
+	div.emyactions button:hover {background-color: var(--mark-bah);color: var(--mark-bahtxt);border-left: 5px solid rgba(255, 255, 255, 0.103);}
+	div.emyactions button.active {background-color: var(--mark-baativo);color: var(--mark-baativotxt);border-left: 5px solid rgba(255, 255, 255, 0.103);}
+
+	#actions button.active {height: var(--mark-botaoespaco);}
+	#event-actions button.active {height: var(--mark-botaoespaco);}
+
+ 
+.fundo{background-size: cover !important;}
+
+.versao{display: var(--mark-versao) !important;}
+
+	/* Marcador de comandos e eventos */
+	.savemark{background: var(--mark-color);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.savemarktxt{background: var(--mark-colortxt);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+
+		/* notas */
+		.savenotasfundo{background: var(--mark-notasfundo);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+		.savenotastxt{background: var(--mark-notastxt);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+		.notasarea{background:var(--config-notasfundo);color:var(--config-notastxt);border:var(--config-bordanotas)}
+
+	/* Barra de rolagem */
+	.saverolfundo{background: var(--mark-rolfundo);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.saverolbarra{background: var(--mark-rolbarra);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.saverolbarraativa{background: var(--mark-rolbarraativa);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+	.saverolbotoes{background: var(--mark-rolbotoes);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+::-webkit-scrollbar-track {background: var(--mark-rolfundo)}
+::-webkit-scrollbar {
+    width: var(--mark-roltamanho);
+    background: var(--mark-rolbarra);
+	border: var(--mark-rolborda);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--mark-rolbarra);
+	border: var(--mark-rolborda);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--mark-rolbarraativa);border: var(--mark-rolborda);}
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+    display: block;
+	border: var(--mark-rolborda);
+}
+
+::-webkit-scrollbar-button:end:increment {
+    background: var(--mark-rolbotoes);
+	display: var(--mark-rolbotoesonoff);
+	border: var(--mark-rolborda);
+}
+::-webkit-scrollbar-button:end:increment:hover{
+    background: var(--mark-rolbarraativa);
+	display: var(--mark-rolbotoesonoff);
+	border: var(--mark-rolborda);
+}
+::-webkit-scrollbar-button:start:decrement {
+    background: var(--mark-rolbotoes);
+	display: var(--mark-rolbotoesonoff);
+	border: var(--mark-rolborda);
+}
+::-webkit-scrollbar-button:start:decrement:hover{
+    background: var(--mark-rolbarraativa);
+	border: var(--mark-rolborda);}
+
+::-webkit-scrollbar-track-piece:vertical:start {
+    background: var(--mark-rolfundo);
+	border: var(--mark-rolborda);
+    background-repeat: no-repeat, repeat-y;
+}
+
+::-webkit-scrollbar-track-piece:vertical:end {
+    background: var(--mark-rolfundo);
+	border: var(--mark-rolborda);
+    background-repeat: no-repeat, repeat-y;
+    background-position: bottom left, 0 0;
+}
+
+::-webkit-scrollbar-track-piece:horizontal:start {
+    background: var(--mark-rolfundo);
+	border: var(--mark-rolborda);
+    background-repeat: no-repeat, repeat-y;
+}
+
+::-webkit-scrollbar-track-piece:horizontal:end {
+    background: var(--mark-rolfundo);
+	border: var(--mark-rolborda);
+    background-repeat: no-repeat, repeat-y;
+    background-position: bottom left, 0 0;
+}
+
+.savetxt{background: var(--mark-textos);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+.saveaction{background: var(--mark-fa);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+.savetextocaixa{background: var(--mark-textocaixa);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+
+body {color: var(--mark-textos) }
+
+
+
+
+input{background-color: var(--mark-caixafundo);border: var(--mark-bordacaixa) !important;color: var(--mark-textocaixa) !important}
+#storage{background-color: var(--mark-caixafundo);border: var(--mark-bordacaixa) !important;color: var(--mark-textocaixa) !important}
+select{background: var(--mark-caixafundo);border: var(--mark-bordacaixa);color: var(--mark-textocaixa)}
+.ui.selection.dropdown{background: var(--mark-caixafundo);border: var(--mark-bordacaixa);color: var(--mark-textocaixa)}
+div.menu.transition.visible{background: var(--mark-caixafundo);border: var(--mark-bordacaixa);color: var(--mark-textocaixa)}
+
+/* Botões */
+.savebfundo{background: var(--mark-bfundo);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+.savebtexto{background: var(--mark-btexto);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+.savebfundohover{background: var(--mark-bfundohover);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+.savebtextohover{background: var(--mark-btextohover);cursor:pointer;width: 25px;height:25px;border-radius: 6px;border:none;}
+.ui.button {background: var(--mark-bfundo);color: var(--mark-btexto);font-weight: bold;}
+.ui.button:hover {background: var(--mark-bfundohover);color: var(--mark-btextohover);font-weight: bold;}
+
+
+#browsebutton{background: #333;color:#ccc;border-radius: 10px;}
+#browsebutton:hover{background: #555;color:#fff;cursor:pointer}
+#browsebutton:active{background: rgb(38, 149, 177);color:#fff;cursor:pointer}
+
+
+
+
+
+

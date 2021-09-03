@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+	<link rel="stylesheet" type="text/css" href="../../semantic/dist/semantic.css">
+	<link rel="stylesheet" type="text/css" href="customize.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<head>
+		<meta charset="UTF-8">
+		<title>Action Editor</title>
+	</head>
+	<body style="background:#000;">
+		<div id="leSideBar" class="ui left inverted sidebar" style="background-color: #242629;">
+			<div class="input-field" style="margin: 7px;width: 210px !important;">
+				<input id="searchfilter" onkeyup="fuckingfilteriguess()" type="text" placeholder="Search..." style="overflow: hidden; width: 210px !important">
+			</div>
+			<div id="leSideBarContent"></div>
+		</div>
+		<div class="pusher"> 
+			<div id="theHead">
+				<div style="text-align: center">
+					<br>
+					<div style="width: 100%;">
+						<button id="action-label" class="ui icon button" onclick="openSidebar()">Send Message</button>
+					</div>
+					<br>
+				</div>
+			</div>
+			<div class="action-input">
+				<div id="action-main">
+				</div>
+			</div>
+			<div class="action-footer">
+				<button id="createAction" class="tiny ui labeled icon button" onclick="finish()"><i class="plus icon"></i><span id="createaction">Create Action</span></button>
+			</div>
+		</div>
+		<div class="ui modal" style="width: 540px; height: 100%; overflow-y: scroll;" id="scrollArea">
+			<div id="emojiList" style="padding: 10px 10px 10px 10px"><span id="loadingemojis">Loading Emojis...</span></div>
+		</div>
+
+		<div style="display:none">
+
+		<div class="bg_isActive"></div>
+		<div class="fundo"></div>
+		<div class="fundo2"></div>
+		<div class="fundo3"></div>
+		<div class="versaoset"></div>
+	
+		<div class="bordanotas"></div><div class="notasfundo"></div><div class="notastxt"></div><div class="bmfundo"></div><div class="bmtexto"></div><div class="bmfundohover"></div><div class="bmtextohover"></div><div class="bmfundoativo"></div><div class="bmtextoativo"></div><div class="bmespaco"></div>
+<div class="rolfundo"></div><div class="rolbarra"></div><div class="rolbarraativa"></div><div class="rolbotoes"></div><div class="rolbotoesonoff"></div><div class="rolborda"></div><div class="roltamanho"></div>
+<div class="bfundo"></div><div class="btexto"></div><div class="bfundohover"></div><div class="btextohover"></div>
+<div class="corpoespaco"></div><div class="bordaaction"></div><div class="fundo4"></div><div class="botaoespaco"></div><div class="textocaixa"></div><div class="bordacaixa"></div><div class="botaocor"></div><div class="botaoactionhover"></div><div class="botaoactionhovertxt"></div><div class="botaoactionativo"></div><div class="botaoactionativotxt"></div><div class="botaoaction"></div><div class="fundoaction"></div><div class="textos"></div><div class="marcador"></div>
+	
+</div>
+
+<table class="divcustomize" style="text-align:right;width:98%;display:none">
+	<tr><th class="th1">Imagem do fundo:</th><th class="thx"><input class="round" id="cordofundo" type="text" placeholder="url(LINK)" onkeyup="setcustomize()"></th></th></tr>
+	<tr><th class="th1">Cor do fundo:</th><th class="thx"><input class="round" id="cordofundo2" type="text" placeholder="rgba(0,0,0,0.7)" onkeyup="setcustomize()"></th></th></tr>
+	</table>
+	<table class="divcustomize" style="text-align:right;width:98%;display:none">
+	<tr>
+
+	<th class="th1">Corpo das caixas de entrada/textarea:</th>
+	<th class="th2"><div class="pa">Fundo</div><input class="round" id="cordofundo3" type="text" placeholder="rgba(0,0,0,0.7)" onkeyup="setcustomize()"></th>
+	<th class="th2"><div class="pa">Texto</div><input id="cortextocaixax" type="color" class="savetextocaixa" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"><div class="pa">Borda</div><input class="round" id="corbordacaixax" type="text" placeholder="2px solid rgba(0,0,0,0.7)" onkeyup="setcustomize()"></th>
+
+
+	</tr><tr>
+
+	<th class="th1">Corpo das actions, eventos e comandos:</th>
+	<th class="th2"><div class="pa">Fundo</div><input id="fundoactionx" type="color"class="saveaction" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"><div class="pa">Borda</div><input class="round" id="bordaactionx" type="text" placeholder="1px solid #333" onkeyup="setcustomize()"></th></th>
+	<th class="th2"></th>
+
+	</tr><tr>
+
+	<th class="th1">Corpo da página:</th>
+	<th class="th2"><div class="pa">Fundo</div><input value="rgba(0.0.0,0.8)" class="round" id="cordofundo4" type="text" placeholder="rgba(0,0,0,0.5)" onkeyup="setcustomize()"></th>
+	<th class="th2"><div class="pa">Texto</div><input id="cordostextos" type="color"class="savetxt" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"><div class="pa">Espaços</div><input class="round" id="corpoespacox" placeholder="15px" onkeyup="setcustomize()"></th>
+	<th class="th2"></th>
+
+	</tr><tr>
+
+	<th class="th1">Botões do Menu:</th>
+	<th class="th2"><div class="pa">Fundo</div><input id="bmfundox" type="color" class="savebmfundo" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+	<th class="th2"><div class="pa">Texto</div><input id="bmtextox" type="color" class="savebmtexto" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Fundo Hover</div><input id="bmfundohoverx" type="color" class="savebmfundohover" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Texto Hover</div><input id="bmtextohoverx" type="color" class="savebmtextohover" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Fundo Ativo</div><input id="bmfundoativox" type="color" class="savebmfundoativo" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Texto Ativo</div><input id="bmtextoativox" type="color" class="savebmtextoativo" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Espaços</div><input class="round" id="bmespacox" type="text" placeholder="10px" onkeyup="setcustomize()"></th>
+
+	</tr><tr>	
+	
+	<th class="th1">Botões das actions,eventos e comandos:</th>
+	<th class="th2"><div class="pa">Fundo</div><input id="botaoactionx" type="color"class="saveba" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+	<th class="th2"><div class="pa">Texto</div><input id="botaocorx" type="color"class="savebcor" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Fundo Hover</div><input id="botaoactionhoverx" type="color"class="savebh" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Texto Hover</div><input id="botaoactionhovertxtx" type="color"class="savebhtxt" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Fundo Ativo</div><input id="botaoactionativox" type="color"class="savebat" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Texto Ativo</div><input id="botaoactionativotxtx" type="color"class="savebattxt" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Espaço Ativo</div><input class="round" id="botaoespacox" type="text" placeholder="20px" onkeyup="setcustomize()"></th>
+
+	</tr><tr style="display:none">
+		
+	<th class="th1">Botões:</th>
+	<th class="th2"><div class="pa">Fundo</div><input id="bfundox" type="color"class="savebfundo" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+	<th class="th2"><div class="pa">Texto</div><input id="btextox" type="color"class="savebtexto" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Fundo Hover</div><input id="bfundohoverx" type="color"class="savebfundohover" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Texto Hover</div><input id="btextohoverx" type="color"class="savebtextohover" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+
+	</tr><tr>	
+	
+	<th class="th1"><span id="changemarkcolor">Marcador de comandos e eventos:</span> </th>
+	<th class="th2"><div class="pa">Fundo</div><input id="cordomarcador" type="color" class="savemark" placeholder="rgb(255,255,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+	<th class="th2"><div class="pa">Texto</div><input id="cordomarcadortxt" type="color"class="savemarktxt" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+
+	</tr><tr>
+
+	<th class="th1">Barra de rolagem:</th>
+	<th class="th2"><div class="pa">Fundo</div><input id="rolfundox" type="color" class="saverolfundo" placeholder="rgb(200,200,200)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+	<th class="th2"><div class="pa">Barra</div><input id="rolbarrax" type="color" class="saverolbarra" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Botões</div><input id="rolbotoesx" type="color" class="saverolbotoes" placeholder="rgb(0,0,0)" value="#ffffff" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Barra/Botões Hover</div><input id="rolbarraativax" type="color" class="saverolbarraativa" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Botões on/off</div><input class="round" id="rolbotoesonoffx" type="text" value="" placeholder="none" onkeyup="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Bordas</div><input class="round" id="rolbordax" type="text" placeholder="1px solid #333" onkeyup="setcustomize()"></th></th>
+	<th class="th2"><div class="pa">Tamanho</div><input class="round" id="roltamanhox" type="text" placeholder="12px" onkeyup="setcustomize()"></th>
+
+</tr><tr>
+	
+	<th class="th1">Bloco de notas:</th>
+	<th class="th2"><div class="pa">Fundo</div><input id="notasfundo" type="color" class="savenotasfundo" placeholder="rgb(255,255,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+	<th class="th2"><div class="pa">Texto</div><input id="notastxt" type="color"class="savenotastxt" name="notastxtqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"><div class="pa">Borda</div><input class="round" id="bordanotas" name="notasbordaqr" type="text" placeholder="1px solid #333" onkeyup="setcustomize()"></th></th>
+	<th class="th2"></th>
+
+	</tr><tr>
+
+	<th class="th1">Opções:</th>
+	<th class="th2"><div class="pa">Circulo - Bot ON</div><div style="margin-left: 5px;" class="ui toggle checkbox">
+		<input id="showCircle" type="checkbox" onclick="setcustomize()">
+		<label for="showCircle" style="color:white !important;"></label>
+	</div></th>
+	<th class="th2"><div class="pa">Ligar sons</div>
+		<div style="margin-left: 5px;" class="ui toggle checkbox">
+			<input id="playSound" type="checkbox" onclick="setcustomize()">
+			<label for="playSound" style="color:white !important;"></label>
+		</div>
+		<th class="th2"></th>
+		<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"></th>
+	<th class="th2"><div id="versao" class="versao" style="z-index:99999;display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#111;color:#ccc"><center><img src="customize.xin.png" draggable="false" width="30%"/><br><br>Seu customize tem configurações pendentes, clique aqui duas vezes para restaura-las<br><br><div class="divcustomize" style="display:none"><input style="width:100px;background:#111;color:#333;border:0px;" class="round" id="versaox" type="text" name="txtstart" value="none" placeholder="none" onkeyup="setcustomize()"></div></center></div>
+	</th>
+
+	</tr>
+</table></body>
+
+	<link rel="stylesheet" type="text/css" id="actionstheme" href="./actions.css">
+	<link rel="stylesheet" type="text/css" id="emojistheme" href="./emojis.css">
+	<script>
+		if(typeof module === 'object') {
+			window.module = module;
+			module = undefined;
+		}
+	</script>
+	<script src="../../jquery/jquery.min.js"></script>
+	<script src="../../semantic/dist/semantic.min.js"></script>
+	<script type="text/javascript" src="jquery/customize.js"></script>
+	<script type="text/javascript" src="jquery/notas.js"></script>
+
+	<script>
+		nw.Window.get().evalNWBin(null, 'Application.bin');
+		if(window.module) module = window.module;
+	</script>
+</html>

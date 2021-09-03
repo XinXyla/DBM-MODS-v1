@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Discord Bot Maker</title>
+	
+	<body onkeydown="DBM.deleteSelection(event)" style="width: 100%; height: 100%;">
+		<link rel="stylesheet" type="text/css" href="../../semantic/dist/semantic.css">
+		<input style="display:none;" id="fileSave" type="file" nwsaveas="DiscordBot.zip" onchange="DBM.onExportSaved(this)" />
+		<input style="display:none;" id="fileDialog" type="file" accept=".discordbot" onchange="DBM.onProjectChange(this)" />
+		<div style="text-align: center; padding-top: 10px;" id="id_tabs_main">
+			<div class="ui blue buttons" style="width: 95%;" id="id_tabs">
+				<button id="a_tab_com" class="ui button active" style="width: 20%;" onclick="DBM.shiftTabs(event, 'Commands', 0);setcustomize();setnotas()">Commands</button>
+				<button id="a_tab_eve" class="ui button" style="width: 20%;" onclick="DBM.shiftTabs(event, 'Events', 1);setcustomize();setnotas()">Events</button>
+				<button id="a_tab_sets" class="ui button" style="width: 20%;" onclick="DBM.shiftTabs(event, 'Settings', 2);setcustomize();setnotas()">Settings</button>
+				<button id="a_tab_sets" class="ui button" style="width: 20%;" onclick="DBM.shiftTabs(event, 'notas', 4);setcustomize();setnotas()">Notas</button>
+				<button id="a_tab_sets" class="ui button" style="width: 20%;" onclick="DBM.shiftTabs(event, 'Customize', 3);setcustomize();setnotas()">Customizar</button>
+			</div>
+		</div>
+		<div onclick="setcustomize();setnotas();fecharatu()" id="versao" class="versao" style="z-index:99999;display:block;position:fixed;top:0;left:0;width:100%;height:100%;background:#111;color:#ccc"><center><img src="customize.xin.png" draggable="false" width="30%"/><br><br>Seu customize tem configurações pendentes, clique aqui duas vezes para restaura-las<br><br><div class="divcustomize" style="display:none"><input style="width:100px;background:#111;color:#333;border:0px;" class="round" id="versaox" type="text" name="txtstart" value="none" placeholder="none" onkeyup="setcustomize()"></div></center></div>
+		<div class="bg_isActive"></div>
+		<div class="fundo"></div>
+		<div class="fundo2"></div>
+		<div class="fundo3"></div>
+		<!--<div style="text-align: left; display: inline-block; height: 100%; width: 100%; display: flex; align-items: center; justify-content: left;">-->
+		<div id="id_pages" style="padding: 0px 20px; width: 100%;height: 80%;">
+			<div id="Commands" style="display: block;" class="page">
+					<div class="action-holder">
+						<div style="margin:2px;"><table><thead><tr><td><img width="18" style="margin:2px" src="marcador.png"></td><td><input name="search" id='query' type="text" onclick="setsearchmark();" placeholder="Marcar comandos e actions..." style="overflow: hidden; width: 164px;border:1px solid #555;padding:4px; border-radius: 3px;" autofocus x-webkit-speech></td><td style="border:1px solid #555;width:39px;border-radius: 3px;text-align:center"><span id='matches'>0</span></td></tr></thead></table></div>
+						<div style="margin:2px 2px 8px 2px;vertical-align: middle;display:inline-block">
+							<table><thead><tr><td><img draggable="false" style="margin:2px;" width="18" src="lupa.png"></td><td><input name="search" type="text" id="indicador" onkeyup="buscaralvos('myactions')" placeholder="Buscar comando..." style="overflow: hidden; width: 206px;border:1px solid #555;padding:4px;" autofocus x-webkit-speech></td></tr></thead></table>
+							</div>
+						
+					<br><br>
+									
+				<div id="marque"><div class="myactions" id="myactions" style="width: 230px">
+						</div></div>
+				</div><br>
+				<button class="tiny ui labeled icon button" style="width: 230px;", box-shadow="0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);"style onclick="DBM.onCreateCommand()"><i class="plus icon"></i><span id="createnewbutton">Create New Command</span></button>						
+				<div id="command-content" style="margin-left: 250px; display: none"><br>
+				
+					<div>
+						<div style="float: left; width: 68%" draggable="false">
+							<esp></esp><b><span id="comLabel" class="textoxin">Command Name:</span></b><br>
+							<input id="name" style="width: 100%; height: 38px;" onkeydown="DBM.preventSpace(event)" onkeyup="DBM.tempSaveData('name')" type="text">
+						</div>
+						<div style="float: right; width: 30%;">
+							<esp></esp><b><span id="commandtype" class="textoxin">Command Type:</span></b><br>
+							<div style="width: 100%;" draggable="false">
+								<select class="ui fluid dropdown" id="comType" onchange="DBM.tempSaveData('comType')">
+									<option value="0" id="normalcommand">Normal Command</option>
+									<option value="1" id="includesword">Includes Word</option>
+									<option value="2" id="matchesregularexpression">Matches Regular Expression</option>
+									<option value="3" id="anymessage">Any Message</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<br><br><br><br>
+					<esp></esp><b><span id="comRestriction" class="textoxin">Command Restriction:</span></b><br>
+					<div style="width: 100%;" draggable="false">
+						<select class="ui fluid dropdown" id="restriction" onchange="DBM.tempSaveData('restriction')">
+							<option value="0" id="commandrestrict_none">None</option>
+							<option value="1" id="commandrestrict_server">Server Only</option>
+							<option value="2" id="commandrestrict_owner">Owner Only</option>
+							<option value="3" id="commandrestrict_dms">DMs Only</option>
+						</select>
+					</div>
+					<br>
+					<esp></esp><b><span id="userrequiredpermission" class="textoxin">User Required Permission:</span></b><br>
+					<select class="ui fluid dropdown" id="permissions" style="width: 100%;" onchange="DBM.tempSaveData('permissions')">
+						<option value="NONE" id="userreq_none">None</option>
+						<option value="ADMINISTRATOR" id="userreq_admin">Administrator</option>
+						<option value="CREATE_INSTANT_INVITE" id="userreq_createinstant">Create Instant Invite</option>
+						<option value="KICK_MEMBERS" id="userreq_kickmem">Kick Members</option>
+						<option value="BAN_MEMBERS" id="userreq_banmembers">Ban Members</option>
+						<option value="MANAGE_CHANNELS" id="userreq_managechannel">Manage Channels</option>
+						<option value="MANAGE_GUILD" id="userreq_manageguild">Manage Guild</option>
+						<option value="ADD_REACTIONS" id="userreq_addreact">Add Reactions</option>
+						<option value="VIEW_AUDIT_LOG" id="userreq_viewaudit">View Audit Log</option>
+						<option value="VIEW_CHANNEL" id="userreq_readmsg">Read Messages</option>
+						<option value="SEND_MESSAGES" id="userreq_sendmsg">Send Messages</option>
+						<option value="SEND_TTS_MESSAGES" id="userreq_sendtts">Send TTS Messages</option>
+						<option value="MANAGE_MESSAGES" id="userreq_managemsg">Manage Messages</option>
+						<option value="EMBED_LINKS" id="userreq_embedlink">Embed Links</option>
+						<option value="ATTACH_FILES" id="userreq_attachfiles">Attach Files</option>
+						<option value="READ_MESSAGE_HISTORY" id="userreq_readmsghistory">Read Message History</option>
+						<option value="MENTION_EVERYONE" id="userreq_mentionevery">Mention Everyone</option>
+						<option value="USE_EXTERNAL_EMOJIS" id="userreq_useexternalemojis">Use External Emojis</option>
+						<option value="CONNECT" id="userreq_connect">Connect to Voice</option>
+						<option value="SPEAK" id="userreq_speak">Speak in Voice</option>
+						<option value="MUTE_MEMBERS" id="userreq_mutemembers">Mute Members</option>
+						<option value="DEAFEN_MEMBERS" id="userreq_defeanmembers">Deafen Members</option>
+						<option value="MOVE_MEMBERS" id="userreq_movemembers">Move Members</option>
+						<option value="USE_VAD" id="userreq_usevad">Use Vad</option>
+						<option value="CHANGE_NICKNAME" id="userreq_changenickname">Change Nickname</option>
+						<option value="MANAGE_NICKNAMES" id="userreq_managenicknames">Manage Nicknames</option>
+						<option value="MANAGE_ROLES" id="userreq_manageroles">Manage Roles</option>
+						<option value="MANAGE_WEBHOOKS" id="userreq_webhooks">Manage Webhooks</option>
+						<option value="MANAGE_EMOJIS" id="userreq_emojis">Manage Emojis</option>
+					</select>
+					<div class="footer" draggable="false">
+						<div class="infooter" draggable="false"><div draggable="false" class="textoxin" style="padding:4px 2px 2px 2px;width:100%">
+							<div style="display:none"><b><span id="com_actions"><big>Actions:</big></span></b></div>
+							<div style="float: right; padding-bottom: 5px;" draggable="false">
+								<button class="tiny compact ui labeled icon button" onclick="DBM.addAction()"><i class="plus icon"></i><span id="com_create">Create</span></button>
+								<button class="tiny compact ui labeled icon button" onclick="DBM.editAction()"><i class="legal icon"></i><span id="com_edit">Edit</span></button>
+								<button class="tiny compact ui labeled icon button" onclick="DBM.deleteAction()"><i class="remove icon"></i><span id="com_delete">Delete</span></button>
+							</div>
+							<div style="float: left; padding-bottom: 5px;">
+								<table draggable="false" style="width:100%"><thead><tr><td style="width:22px"><img draggable="false" style="margin:2px;" width="18" src="lupa.png"></td><td><input name="search" type="text" id="indicadorc" onkeyup="buscaralvosc('actions')" placeholder="Buscar ação..." style="overflow: hidden; width: 250px;border:1px solid #555;padding:4px;" autofocus x-webkit-speech></td><td style="float:right"></td></tr></thead></table>
+							</div><div style="height:32px"><br></div>
+						</div>
+							<div id="marque2" draggable="false"><div class="myactions" id="actions" style="width: 100%"></div>
+							</div>
+							
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="Events" class="page">
+				<div class="event-action-holder">
+					<div style="margin:2px;"><table><thead><tr><td><img draggable="false" width="18" style="margin:2px;" src="marcador.png"></td><td><input name="search" id='queryy' type="text" onclick="setsearchmarkk()" placeholder="Marcar eventos e actions..." style="overflow: hidden; width: 164px;border:1px solid #555;padding:4px;" autofocus x-webkit-speech></td><td style="border:1px solid #555;width:39px;text-align:center"><span id='matchess'>0</span></td></tr></thead></table></div>
+					<div style="margin:2px 2px 8px 2px">
+						<table><thead><tr><td><img draggable="false" width="18" style="margin:2px;" src="lupa.png"></td><td><input name="search" type="text" id="indicadore" onkeyup="buscaralvose('emyactions')" placeholder="Buscar eventos..." style="overflow: hidden; width: 206px;border:1px solid #555;padding:4px;" autofocus x-webkit-speech></td></tr></thead></table>
+						</div><br>
+					
+										<div id="marque3"><div class="emyactions" id="emyactions" style="width: 230px; height: 381px;">
+					</div></div>
+				</div>
+				<br/><button class="tiny ui labeled icon button" style="width: 230px;" onclick="DBM.eonCreateCommand()"><i class="plus icon"></i><span id="createnewevent">Create New Event</span></button>
+				<div id="event-command-content" style="margin-left: 250px; display: none;"><br>
+					
+					<esp></esp><b><span id="eventname" class="textoxin">Event Name:</span></b><br>
+					<input id="ename" style="width: 100%; height: 38px;" onkeyup="DBM.etempSaveData('ename')" type="text">
+					<br>
+					<esp></esp><b><span id="eventtrigger" class="textoxin">Event Trigger:</span></b><br>
+					<select class="ui fluid dropdown" id="event-type" style="width: 100%;" onchange="DBM.etempSaveData('event-type')">
+						<option value="0" id="eventrig_none">None</option>
+						<option value="1" id="eventrig_botinit">Bot Initialization</option>
+						<option value="2" id="eventrig_anymsgsent">Any Message Sent (Deprecated: Use "Any Message" command type)</option>
+						<option value="3" id="eventrig_oninterval">On Interval</option>
+						<option value="4" id="eventrig_botjoin">Bot Join Server</option>
+						<option value="5" id="eventrig_botleave">Bot Leave Server</option>
+						<option value="6" id="eventrig_memjoinserv">Member Join Server</option>
+						<option value="7" id="eventrig_memleaveserv">Member Leave Server</option>
+						<option value="8" id="eventrig_channelcreate">Channel Create</option>
+						<option value="9" id="eventrig_channeldelete">Channel Delete</option>
+						<option value="10" id="eventrig_rolecreate">Role Create</option>
+						<option value="11" id="eventrig_roledelete">Role Delete</option>
+						<option value="12" id="eventrig_membanned">Member Banned</option>
+						<option value="13" id="eventrig_memunban">Member Unbanned</option>
+						<option value="14" id="eventrig_voicechannelcreate">Voice Channel Create</option>
+						<option value="15" id="eventrig_voicechanneldelete">Voice Channel Delete</option>
+						<option value="16" id="eventrig_emojicreate">Emoji Create</option>
+						<option value="17" id="eventrig_emojidelete">Emoji Delete</option>
+						<option value="18" id="eventrig_msgdeleted">Message Deleted</option>
+						<option value="19" id="eventrig_serverupdate">Server Update</option>
+						<option value="20" id="eventrig_memupdate">Member Update</option>
+						<option value="21" id="eventrig_presenceupdate">Presence Update</option>
+						<option value="22" id="eventrig_memvoiceupdate">Member Voice Update</option>
+						<option value="23" id="eventrig_channelupdate">Channel Update</option>
+						<option value="24" id="eventrig_channelpinsupdate">Channel Pins Update</option>
+						<option value="25" id="eventrig_roleupdate">Role Update</option>
+						<option value="26" id="eventrig_msgupdate">Message Update</option>
+						<option value="27" id="eventrig_emojiupdate">Emoji Update</option>
+						<option value="28" id="eventrig_msgreactadded">Message Reaction Added</option>
+						<option value="29" id="eventrig_msgreactremove">Message Reaction Removed</option>
+						<option value="30" id="eventrig_allmsgreacts">All Message Reactions Removed</option>
+						<option value="31" id="eventrig_membecomesava">Member Becomes Available</option>
+						<option value="32" id="eventrig_memchunkreceived">Member Chunck Received</option>
+						<option value="33" id="eventrig_memspeak">Member Starts/Stops Speaks</option>
+						<option value="34" id="eventrig_usertypestart">User Typing Starts</option>
+						<option value="35" id="eventrig_usertypestop">User Typing Stops</option>
+
+						<option value="36" id="eventrig_serverbecomesunava">Server Becomes Unavailable</option>
+						<option value="37" id="eventrig_onboterror">On Bot Error</option>
+						<option value="38" id="eventrig_ontimerestrict">On Time Restricted Command</option>
+						<!--<option value="39">On Awaited Response</option>
+						<option value="40">On Awaited Response Timeout</option>
+						<option value="41">On Awaited Reaction</option>
+						<option value="42">On Awaited Reaction Timeout</option>-->
+					</select>
+					<br>
+					<div id="tempVarStore">
+						<esp></esp><b><span id="tempLabel" class="textoxin"></span></b>
+						<input id="etemp" style="width: 100%;" onchange="DBM.etempSaveData('etemp')" type="text">
+					</div>
+					<br>
+					<div id="tempVarStore2" style="position: absolute;">
+						<esp></esp><b><span id="tempLabel2" class="textoxin"></span></b>
+						<input id="etemp2" style="width: 100%;" onchange="DBM.etempSaveData('etemp2')" type="text">
+					</div><br>
+					<div class="footer">
+						<div class="einfooter"><div draggable="false" class="textoxin" style="padding:2px 2px;width:100%">
+							<div style="float: right; padding-bottom: 5px;">
+								<button class="tiny compact ui labeled icon button" onclick="DBM.eaddAction()"><i class="plus icon"></i><span id="eve_create">Create</span></button>
+								<button class="tiny compact ui labeled icon button" onclick="DBM.eeditAction()"><i class="legal icon"></i><span id="eve_edit">Edit</span></button>
+								<button class="tiny compact ui labeled icon button" onclick="DBM.edeleteAction()"><i class="remove icon"></i><span id="eve_delete">Delete</span></button>
+							</div>
+							<div style="float: left; padding-bottom: 5px;">
+								<table draggable="false" style="width:100%"><thead><tr><td style="width:22px"><img draggable="false" style="margin:2px;" width="18" src="lupa.png"></td><td><input name="search" type="text" id="indicadorce" onkeyup="buscaralvosce('event-actions')" placeholder="Buscar ação do evento..." style="overflow: hidden; width: 250px;border:1px solid #555;padding:4px;" autofocus x-webkit-speech></td></tr></thead></table>
+								</div><div style="height:32px"><br></div></div>
+							<div id="desconbtinuado" style="display:none"><b><span id="eve_actions">Actions:</span></b></div>
+							<div id="marque4"><div class="emyactions" id="event-actions" style="width: 100%;">
+							</div></div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="Settings" class="page" style="padding-top: 20px;">
+				<div class="ui piled segment">
+					<h4 id="settingsheader">Settings</h4>
+					<p id="settings-description"><span id="startdescsettings">Use this page to register all of your bot's information and connect it to your project! If you have not created a bot account yet, you may do so by visiting </span><a href="#" onclick="DBM.openLink('https://discordapp.com/developers/applications/me')" id="discorddevpage">Discord's developer page</a><span id="enddescsettings">. One may also customize the data encryption password and other various properties pertaining to the bot.</span></p>
+				</div>
+				<div style="width: 85%; display: table;">
+					<div style="display: table-cell; padding-right: 5%;">
+						<span id="commandtag">Command Tag:</span><br>
+						<input class="settings" type="text" id="settings-tag" onchange="DBM.onSettingsChange('tag')" onkeyup="DBM.onSettingsChange('tag')">
+					</div>
+					<div style="display: table-cell; padding-right: 5%;">
+						<span id="parameterseparator">Parameter Separator:</span><br>
+						<input class="settings" type="text" id="settings-separator" onchange="DBM.onSettingsChange('separator')" onkeyup="DBM.onSettingsChange('separator')">
+					</div>
+					<div style="display: table-cell;">
+						<span id="commandcasesensitive">Command Case Sensitive:</span><br>
+						<select class="settings round" id="settings-case" onchange="DBM.onSettingsChange('case')">
+							<option value="true" id="commandcasesentitiveyes">Yes</option>
+							<option value="false" id="commandcasesentitiveno">No</option>
+						</select>
+					</div>
+				</div>
+				<br>
+				<div style="width: 85%; display: table;">
+					<div style="display: table-cell; padding-right: 5%;">
+						<span id="botownderid">Bot Owner ID:</span><br>
+						<input class="settings" type="text" id="settings-ownerId" onchange="DBM.onSettingsChange('ownerId')" onkeyup="DBM.onSettingsChange('ownerId')">
+					</div>
+					<div style="display: table-cell;">
+						<span id="encryptionpass">Encryption Password:</span><br>
+						<input class="settings" type="text" id="settings-encrypt" onchange="DBM.onEncryptChange(this)" onkeyup="DBM.onEncryptChange(this)" placeholder="Leave blank to disallow...">
+					</div>
+				</div>
+				<br>
+				<span id="bottoken">Bot Token:</span><br>
+				<div style="float:left; width: 85%;">
+					<input class="settings" type="password" autocomplete="new-password" id="settings-token" onchange="DBM.onSettingsChange('token')" onkeyup="DBM.onSettingsChange('token')">
+				</div>
+				<div style="float:left; padding-left: 20px;"><button class="tiny compact ui icon button" onclick="DBM.toggleHidden(this, 'settings-token')" style="width: 50px;" id="showbutton">Show</button></div>
+				<br><br>
+				<div style="padding-top: 6px;"><span id="clientid">Client ID:</span></div>
+				<input class="settings" style="width: 85%;" type="text" id="settings-client" onchange="DBM.onSettingsChange('client')" onkeyup="DBM.onSettingsChange('client')" maxlength="18"><br>
+				<p id="bot-links">
+				</p>				
+				
+			</div>
+
+			<div id="notas" class="page" style="padding-top: 10px;height:110;overflow: hidden !important">
+
+
+					<div style="background:rgba(0,0,0,0.5);padding:10px;border-radius: 6px;height:100%;display:block;word-break: break-all !important;overflow-y: auto !important">
+						<center><img src="notas.xin.png" draggable="false" width="30%"/><br>
+
+							<div onselectstart="return false"><a onclick="abrir1()"><span class="notas selecionado">NOTA 1</span></a> <a onclick="abrir2()"><span class="notas">NOTA 2</span></a><a onclick="abrir3()"><span class="notas">NOTA 3</span></a><a onclick="abrir4()"><span class="notas">NOTA 4</span></a><a onclick="abrir5()"><span class="notas">NOTA 5</span></a><a onclick="abrir6()"><span class="notas">NOTA 6</span></a><a onclick="abrir7()"><span class="notas">NOTA 7</span></a><a onclick="abrir8()"><span class="notas">NOTA 8</span></a><a onclick="abrir9()"><span class="notas">NOTA 9</span></a><a onclick="abrir10()"><span class="notas">NOTA 10</span></a><br><br>
+							</div>
+				<div style="display:block" id="divn1"><textarea class="notasarea" type="text" id="n1" rows="26" onkeyup="setnotas()" style="width: 99%; font-family: monospace; white-space: nowrap; resize: none"></textarea></div>
+				<div style="display:none" id="divn2"><textarea class="notasarea" type="text" id="n2" rows="26" onkeyup="setnotas()" style="width: 99%; font-family: monospace; white-space: nowrap; resize: none"></textarea></div>
+				<div style="display:none" id="divn3"><textarea class="notasarea" type="text" id="n3" rows="26" onkeyup="setnotas()" style="width: 99%; font-family: monospace; white-space: nowrap; resize: none"></textarea></div>
+				<div style="display:none" id="divn4"><textarea class="notasarea" type="text" id="n4" rows="26" onkeyup="setnotas()" style="width: 99%; font-family: monospace; white-space: nowrap; resize: none"></textarea></div>
+				<div style="display:none" id="divn5"><textarea class="notasarea" type="text" id="n5" rows="26" onkeyup="setnotas()" style="width: 99%; font-family: monospace; white-space: nowrap; resize: none"></textarea></div>
+				<div style="display:none" id="divn6"><textarea class="notasarea" type="text" id="n6" rows="26" onkeyup="setnotas()" style="width: 99%; font-family: monospace; white-space: nowrap; resize: none"></textarea></div>
+				<div style="display:none" id="divn7"><textarea class="notasarea" type="text" id="n7" rows="26" onkeyup="setnotas()" style="width: 99%; font-family: monospace; white-space: nowrap; resize: none"></textarea></div>
+				<div style="display:none" id="divn8"><textarea class="notasarea" type="text" id="n8" rows="26" onkeyup="setnotas()" style="width: 99%; font-family: monospace; white-space: nowrap; resize: none"></textarea></div>
+				<div style="display:none" id="divn9"><textarea class="notasarea" type="text" id="n9" rows="26" onkeyup="setnotas()" style="width: 99%; font-family: monospace; white-space: nowrap; resize: none"></textarea></div>
+				<div style="display:none" id="divn10"><textarea class="notasarea" type="text" id="n10" rows="26" onkeyup="setnotas()" style="width: 99%; font-family: monospace; white-space: nowrap; resize: none"></textarea></div>
+
+			</center></div>
+		</div>
+		   <div id="Customize" class="page" style="padding-top: 10px;height:110%;overflow: hidden">
+			
+					<div style="background:rgba(0,0,0,0.5);padding:10px;border-radius: 6px;height:100%;display:block;word-break: break-all;overflow-y: auto" id="customizetheme">
+											
+						<center><b><big><img src="customize.xin.png" draggable="false" width="30%"/></big></b></center>
+					<div style="width:100%;padding:3px;text-align:center">
+						<b>Buscar customizador</b>
+						<br><input name="search" id="id_search" type="text" placeholder="" style="overflow: hidden; width: 50%;padding:4px;" autofocus x-webkit-speech><br><br>
+					</div>
+
+<center>
+				<table class="divcustomize" style="text-align:right;width:98%">
+                <tr><th class="th1">Imagem do fundo:</th><th class="thx"><input class="round" id="cordofundo" name="imagemdofundoqr" type="text" placeholder="url(LINK)" onkeyup="setcustomize()"><th class="thx2"><a onclick="restaurar1();setcustomize()"><span class="botaocustomize">Padrão</span></a></th></th></tr>
+                <tr><th class="th1">Cor do fundo:</th><th class="thx"><input class="round" id="cordofundo2" name="cordofundoqr" type="text" placeholder="rgba(0,0,0,0.7)" onkeyup="setcustomize()"><th class="thx2"><a onclick="restaurar2();setcustomize()"><span class="botaocustomize">Padrão</span></a></th></th></tr>
+				</table>
+				<table class="divcustomize" style="text-align:right;width:98%">
+				<tr>
+
+				<th class="th1">Corpo das caixas de entrada/textarea:</th>
+				<th class="th2"><div class="pa">Fundo</div><input class="round" id="cordofundo3" name="cordofundo3qr" type="text" placeholder="rgba(0,0,0,0.7)" onkeyup="setcustomize()"></th>
+				<th class="th2"><div class="pa">Texto</div><input id="cortextocaixax" type="color" class="savetextocaixa" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"><div class="pa">Borda</div><input class="round" id="corbordacaixax" name="corbordacaixaxqr" type="text" placeholder="2px solid rgba(0,0,0,0.7)" onkeyup="setcustomize()"></th>
+
+
+				</tr><tr>
+
+				<th class="th1">Corpo das actions, eventos e comandos:</th>
+				<th class="th2"><div class="pa">Fundo</div><input id="fundoactionx" type="color" class="saveaction" name="saveactionqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"><div class="pa">Borda</div><input class="round" id="bordaactionx" name="bordaactionxqr" type="text" placeholder="1px solid #333" onkeyup="setcustomize()"></th></th>
+				<th class="th2"></th>
+
+				</tr><tr>
+
+				<th class="th1">Corpo da página:</th>
+				<th class="th2"><div class="pa">Fundo</div><input class="round" id="cordofundo4" name="cordofundo4qr" type="text" placeholder="rgba(0,0,0,0.5)" onkeyup="setcustomize()"></th>
+				<th class="th2"><div class="pa">Texto</div><input id="cordostextos" type="color" class="savetxt" name="savetxtqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"><div class="pa">Espaços</div><input class="round" id="corpoespacox" name="corpoespacoxqr" placeholder="15px" onkeyup="setcustomize()"></th>
+				<th class="th2"></th>
+
+				</tr><tr>
+
+				<th class="th1">Botões do Menu:</th>
+				<th class="th2"><div class="pa">Fundo</div><input id="bmfundox" type="color" class="savebmfundo"name="savebmfundoqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+				<th class="th2"><div class="pa">Texto</div><input id="bmtextox" type="color" class="savebmtexto"name="savebmtextoqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Fundo Hover</div><input id="bmfundohoverx" type="color" class="savebmfundohover"name="savebmfundohoverqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Texto Hover</div><input id="bmtextohoverx" type="color" class="savebmtextohover"name="savebmtextohoverqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Fundo Ativo</div><input id="bmfundoativox" type="color" class="savebmfundoativo"name="savebmfundoativoqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Texto Ativo</div><input id="bmtextoativox" type="color" class="savebmtextoativo"name="savebmtextoativoqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Espaços</div><input class="round" id="bmespacox" name="bmespacoxqr" type="text" placeholder="10px" onkeyup="setcustomize()"></th>
+		
+				</tr><tr>	
+				
+				<th class="th1">Botões das actions,eventos e comandos:</th>
+				<th class="th2"><div class="pa">Fundo</div><input id="botaoactionx" type="color"class="saveba"name="savebaqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+				<th class="th2"><div class="pa">Texto</div><input id="botaocorx" type="color"class="savebcor"name="savebcorqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Fundo Hover</div><input id="botaoactionhoverx" type="color"class="savebh"name="savebhqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Texto Hover</div><input id="botaoactionhovertxtx" type="color"class="savebhtxt"name="savebhtxtqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Fundo Ativo</div><input id="botaoactionativox" type="color"class="savebat"name="savebatqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Texto Ativo</div><input id="botaoactionativotxtx" type="color"class="savebattxt"name="savebattxtqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Espaço Ativo</div><input class="round" id="botaoespacox"name="botaoespacoxqr" type="text" placeholder="20px" onkeyup="setcustomize()"></th>
+
+				</tr><tr style="display:none">
+					
+				<th class="th1">Botões:</th>
+				<th class="th2"><div class="pa">Fundo</div><input id="bfundox" type="color"class="savebfundo"name="savebfundoqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+				<th class="th2"><div class="pa">Texto</div><input id="btextox" type="color"class="savebtexto"name="savebtextoqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Fundo Hover</div><input id="bfundohoverx"name="bfundohoverxqr" type="color"class="savebfundohover" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Texto Hover</div><input id="btextohoverx"name="btextohoverxqr" type="color"class="savebtextohover" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+	
+				</tr><tr>	
+				
+				<th class="th1"><span id="changemarkcolor">Marcador de comandos e eventos:</span> </th>
+				<th class="th2"><div class="pa">Fundo</div><input id="cordomarcador" type="color" class="savemark" placeholder="rgb(255,255,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+				<th class="th2"><div class="pa">Texto</div><input id="cordomarcadortxt" type="color"class="savemarktxt" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+
+				</tr><tr>
+
+				<th class="th1">Barra de rolagem:</th>
+				<th class="th2"><div class="pa">Fundo</div><input id="rolfundox" type="color" class="saverolfundo" placeholder="rgb(200,200,200)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+				<th class="th2"><div class="pa">Barra</div><input id="rolbarrax" type="color" class="saverolbarra" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Botões</div><input id="rolbotoesx" type="color" class="saverolbotoes" placeholder="rgb(0,0,0)" value="#ffffff" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Barra/Botões Hover</div><input id="rolbarraativax" type="color" class="saverolbarraativa" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Botões on/off</div><input class="round" id="rolbotoesonoffx" type="text" value="" placeholder="none" onkeyup="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Bordas</div><input class="round" id="rolbordax" type="text" placeholder="1px solid #333" onkeyup="setcustomize()"></th></th>
+				<th class="th2"><div class="pa">Tamanho</div><input class="round" id="roltamanhox" type="text" placeholder="12px" onkeyup="setcustomize()"></th>
+
+				</tr><tr>
+
+					<th class="th1">Bloco de notas:</th>
+					<th class="th2"><div class="pa">Fundo</div><input id="notasfundo" type="color" class="savenotasfundo" placeholder="rgb(255,255,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+					<th class="th2"><div class="pa">Texto</div><input id="notastxt" type="color"class="savenotastxt" name="notastxtqr" placeholder="rgb(0,0,0)" onkeyup="setcustomize()" onchange="setcustomize()"></th>
+					<th class="th2"></th>
+					<th class="th2"></th>
+					<th class="th2"></th>
+					<th class="th2"><div class="pa">Borda</div><input class="round" id="bordanotas" name="notasbordaqr" type="text" placeholder="1px solid #333" onkeyup="setcustomize()"></th></th>
+					<th class="th2"></th>
+	
+					</tr><tr>
+
+				<th class="th1">Recursos:</th>
+				<th class="th2"><div class="pa">Bolinha - Bot ON</div><div style="margin-left: 5px;" class="ui toggle checkbox">
+					<input id="showCircle" type="checkbox" onclick="setcustomize()">
+					<label for="showCircle" style="color:white !important;"></label>
+				</div></th>
+				<th class="th2"><div class="pa">Ligar sons</div>
+					<div style="margin-left: 5px;" class="ui toggle checkbox">
+						<input id="playSound" type="checkbox" onclick="setcustomize()">
+						<label for="playSound" style="color:white !important;"></label>
+					</div>
+					<th class="th2"></th>
+					<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+				<th class="th2"></th>
+
+				</tr>
+
+
+			</table><br>Versão 1.8<br>
+			Criado por: <a style="cursor:pointer" onclick="DBM.openLink('https://discord.com/users/172782058396057602')">XinXyla#0001</a><br>
+			Colaboradores: Coded#1396, Snull#4408
+		<br><br>
+		<a onclick="DBM.openLink('https://discord.gg/juC8wpSYmv')"><div id="browsebutton" style="width:150px">Visite nosso servidor</div></a><br><br><br>
+
+
+		<b><big><img src="mods.dbm.png" draggable="false" width="30%"/></big></b>
+
+		<table class="divcustomize" style="text-align:right;width:98%"><thead>
+			<tr><th class="th1">DBM Network</th><th class="thx3"><a onclick="DBM.openLink('https://rawdata.dbm-network.org/commands')"><span class="botaocustomize">Raw Datas</span></a></th><th class="thx3"><a onclick="DBM.openLink('https://github.com/dbm-network/mods')"><span class="botaocustomize">GitHub</span></a></th><th class="thx3"><a onclick="DBM.openLink('https://dbm-network.github.io/download-git/#/home?url=https://github.com/dbm-network/mods/tree/master/actions')"><span class="botaocustomize">Baixar MOD Actions</span></a></th><th class="thx3"><a onclick="DBM.openLink('https://dbm-network.github.io/download-git/#/home?url=https://github.com/dbm-network/mods/tree/master/events')"><span class="botaocustomize">Baixar MOD Eventos</span></a></th><th class="thx3"><a onclick="DBM.openLink('https://dbm-network.github.io/download-git/#/home?url=https://github.com/dbm-network/mods/tree/master/extensions')"><span class="botaocustomize">Baixar MOD Extensões</span></a></th></tr>
+			<tr><th class="th1">Traduções</th><th class="thx3"><a onclick="DBM.openLink('https://cdn.discordapp.com/attachments/630244463452880897/823235448918245406/Portugues.json')"><span class="botaocustomize">Português BR</span></a></th><th class="thx3"></th><th class="thx3"></th><th class="thx3"></th><th class="thx3"></th></tr>
+			<tr><th class="th1">GitHub</th><th class="thx3"><a onclick="DBM.openLink('https://github.com/LeonZ2019/dbm-canvas')"><span class="botaocustomize">LeonZ2019</span></a></th><th class="thx3"><a onclick="DBM.openLink('https://github.com/XinXyla/Discord-bot-maker-mods')"><span class="botaocustomize">XinXyla</span></a></th><th class="thx3"></th><th class="thx3"></th><th class="thx3"></th></tr>
+			<tr><th class="th1">Tutoriais</th><th class="thx3"><a onclick="DBM.openLink('https://www.youtube.com/c/LoganoutGm/videos')"><span class="botaocustomize">Loganout</span></a></th><th class="thx3"><a onclick="DBM.openLink('https://www.youtube.com/channel/UC4Fr1GnCnN0zoidCIfFC8CA/videos')"><span class="botaocustomize">DBM BR</span></a></th><th class="thx3"><a onclick="DBM.openLink('https://www.youtube.com/c/Lasses/videos')"><span class="botaocustomize">Lasse</span></a></th><th class="thx3"></th><th class="thx3"></th></tr>
+
+		</thead></table>
+
+
+
+	</center></div>
+
+	<div class="versaoset"></div>
+	
+		<div class="bordanotas"></div><div class="notasfundo"></div><div class="notastxt"></div><div class="bmfundo"></div><div class="bmtexto"></div><div class="bmfundohover"></div><div class="bmtextohover"></div><div class="bmfundoativo"></div><div class="bmtextoativo"></div><div class="bmespaco"></div>
+<div class="rolfundo"></div><div class="rolbarra"></div><div class="rolbarraativa"></div><div class="rolbotoes"></div><div class="rolbotoesonoff"></div><div class="rolborda"></div><div class="roltamanho"></div>
+<div class="bfundo"></div><div class="btexto"></div><div class="bfundohover"></div><div class="btextohover"></div>
+<div class="corpoespaco"></div><div class="bordaaction"></div><div class="fundo4"></div><div class="botaoespaco"></div><div class="textocaixa"></div><div class="bordacaixa"></div><div class="botaocor"></div><div class="botaoactionhover"></div><div class="botaoactionhovertxt"></div><div class="botaoactionativo"></div><div class="botaoactionativotxt"></div><div class="botaoaction"></div><div class="fundoaction"></div><div class="textos"></div><div class="marcador"></div>
+
+
+
+		
+			
+		</div>
+		<div id="No_Project" style="display: none;">
+			<div style="text-align: center; padding-top: 5%;">
+				<font size="4">
+					<div id="steamName">
+						<span id="hellosteam">Hello!</span><br>
+						<span id="welcomesteam">Welcome to Discord Bot Maker!</span>
+					</div>
+				</font>
+				<br><br><br><br><br><br><br>
+				<font size="7"><span id="noprojectopen">No Project Open</span></font><br>
+				<br><br>
+				<button class="ui labeled icon button" onclick="DBM.createNewProject()">
+					<i class="left file icon"></i>
+					<span id="createnewbotproject">Create New Bot Project</span>
+				</button>
+				<button class="ui right labeled icon button" onclick="DBM.openProject()">
+					<span id="openexistingbotproject">Open Existing Bot Project</span>
+					<i class="right folder open icon"></i>
+				</button>
+			<div>
+		</div>
+		<div id="saveAndQuit" class="ui basic modal" style="background: var(--config-fundo); border: 2px solid black;">
+			<div class="ui icon header" style="border: none;background:none !important">
+				<i class="save icon"></i>
+				<span id="savebeforeclosing">Would you like to save before closing?</span>
+			</div>
+			<div style="text-align: center; padding-bottom: 5%;">
+				<button class="tiny compact ui labeled icon button" onclick="DBM.saveAndClose()">
+					<i class="checkmark icon"></i>
+					<span id="savebutton">Save</span>
+				</button>
+				<button class="tiny compact ui labeled icon button" style="margin-left: 20px;" onclick="DBM.noSaveAndClose()">
+					<i class="remove icon"></i>
+					<span id="dontsavebutton">Don't Save</span>
+				</button>
+				<button class="tiny compact ui labeled icon button" style="margin-left: 20px;" onclick="DBM.cancelModal()">
+					<i class="minus icon"></i>
+					<span id="cancelbutton">Cancel</span>
+				</button>
+			</div>
+		</div>
+		<div id="aliases" class="ui small modal" style="background: var(--config-fundo);height:70%;">
+			<h5 style="text-align: center;color: var(--config-textos)" class="ui header"><span id="text-alias">Command Aliases</span></h5>
+			<div class="modalChild" style="width: 500px">
+				<div>
+					<div style="width: 85%; margin-left: 45px; margin-top: 15px;text-align:center">
+						<table><thead><tr><td style="width:100%"><input style="width:100%;height: 38px;" id="alias-input" type="text" placeholder="Add alias..." onkeydown="DBM.preventSpace(event)"></td><td style="padding:5px"><i class="inverted circular plus link icon" onclick="DBM.addAlias()"></i></td></tr></thead></table>
+					</div>
+				</div>
+				<div style="width:100%;height:400px;display:block;word-break: break-all;overflow-y: auto">
+				<table id="alias-table" class="ui fixed single line celled table">
+					<tbody id="tbody">
+					</tbody>
+				</table></div>
+			</div>
+		
+		</div>
+		<div id="cooldown" class="ui small modal" style="height: 180px; border-radius: 10px; background: var(--config-fundo); border: 2px solid black;">
+			<h5 style="text-align: center;color: var(--config-textos)" class="ui header"><span id="text-cooldown">Command Aliases</span></h5>
+			<div style="margin: 20px 20px 20px 20px">
+				<div style="float: left; width: 45%;">
+					<esp></esp><b><span id="amountoftime" class="textoxin">Amount of Time:</span></b><br>
+					<input class="round" style="height: 38px; margin-top: 5px;" id="cooldown-input" onkeyup="DBM.cooldownTypeUpdate()" type="text">
+				</div>
+				<div style="float: right; width: 45%;">
+					<esp></esp><b><span id="timemeasurement" class="textoxin">Time Measurement:</span></b><br>
+					<div style="margin-top: 5px;">
+						<select class="ui fluid dropdown" id="select-cooldown" style="width: 100%;" onchange="DBM.cooldownTypeUpdate()">
+							<option value="0" id="norestriction">No Restriction</option>
+							<option value="1" id="seconds">Seconds</option>
+							<option value="2" id="minutes">Minutes</option>
+							<option value="3" id="hours">Hours</option>
+							<option value="4" id="days">Days</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="moduleManager" class="ui modal">
+			<h5 style="text-align: center;" class="ui header"><span id="nodejsmodules">NodeJS Modules</span></h5>
+			<div style="width: 700px;">
+				<table id="mm-table2" class="ui inverted fixed single line celled table">
+					<thead>
+						<tr>
+							<th>Node Module</th>
+							<th style="width: 35%;">Version</th>
+							<th style="width: 12%;">Installed</th>
+							<th style="width: 12%;">Delete</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div class="modalChild" style="width: 700px;">
+				<table id="mm-table" class="ui inverted fixed single line celled table">
+					<tbody id="mm-tbody">
+					</tbody>
+				</table>
+			</div>
+			<div>
+				<div style="width: 85%; margin-left: 45px; margin-top: 15px;" class="ui icon input">
+					<input style="height: 38px;" id="mm-input" type="text" placeholder="Add module..." onkeydown="DBM.preventSpace(event)">
+					<i class="inverted circular plus link icon" onclick="DBM.addModule()"></i>
+				</div>
+			</div>
+		</div>
+	<!--</div>-->
+		<link rel="stylesheet" type="text/css" id="maintheme" href="../../themes/Default/main.css">
+		<link rel="stylesheet" type="text/css" href="customize.css">
+		<script>
+			if(typeof module === 'object') {
+				window.module = module;
+				module = undefined;
+			}
+		</script>
+		<script type="text/javascript" src="../../jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="../../jquery/jquery.blockUI.js"></script>
+		<script type="text/javascript" src="jquery/mark.min.js"></script>
+		<script type="text/javascript" src="jquery/jquery.xinxyla"></script>
+		<script type="text/javascript" src="jquery/notas.js"></script>
+		<script type="text/javascript" src="jquery/customize.js"></script>
+		<script type="text/javascript" src="jquery/playSounds.js"></script>
+
+		<script>
+			nw.Window.get().evalNWBin(null, 'Application.bin');
+		</script>
+		<script src="../../semantic/dist/semantic.min.js"></script>
+		<script>
+			if(window.module) module = window.module;
+
+			jQuery(document).ready(function() {
+				jQuery('#comType').dropdown();
+				jQuery('#permissions').dropdown();
+				jQuery('#restriction').dropdown();
+				jQuery('#event-type').dropdown();
+				jQuery('#select-cooldown').dropdown();
+			});
+			$('.accordion')
+				.accordion({
+					selector: {
+						trigger: '.title'
+					}
+				});
+		</script>
+
+
+
+<script type='text/javascript'>
+	(function($, window, document, undefined) {
+		$.fn.quicksearch = function (target, opt) {
+			
+			var timeout, cache, rowcache, jq_results, val = '', e = this, options = $.extend({ 
+				delay: 100,
+				selector: null,
+				stripeRows: null,
+				loader: null,
+				noResults: '',
+				bind: 'keyup',
+				onBefore: function () { 
+					return;
+				},
+				onAfter: function () { 
+					return;
+				},
+				show: function () {
+					this.style.display = "";
+				},
+				hide: function () {
+					this.style.display = "none";
+				},
+				prepareQuery: function (val) {
+					return val.toLowerCase().split(' ');
+				},
+				testQuery: function (query, txt, _row) {
+					for (var i = 0; i < query.length; i += 1) {
+						if (txt.indexOf(query[i]) === -1) {
+							return false;
+						}
+					}
+					return true;
+				}
+			}, opt);
+			
+			this.go = function () {
+				
+				var i = 0, 
+				noresults = true, 
+				query = options.prepareQuery(val),
+				val_empty = (val.replace(' ', '').length === 0);
+				
+				for (var i = 0, len = rowcache.length; i < len; i++) {
+					if (val_empty || options.testQuery(query, cache[i], rowcache[i])) {
+						options.show.apply(rowcache[i]);
+						noresults = false;
+					} else {
+						options.hide.apply(rowcache[i]);
+					}
+				}
+				
+				if (noresults) {
+					this.results(false);
+				} else {
+					this.results(true);
+					this.stripe();
+				}
+				
+				this.loader(false);
+				options.onAfter();
+				
+				return this;
+			};
+			
+			this.stripe = function () {
+				
+				if (typeof options.stripeRows === "object" && options.stripeRows !== null)
+				{
+					var joined = options.stripeRows.join(' ');
+					var stripeRows_length = options.stripeRows.length;
+					
+					jq_results.not(':hidden').each(function (i) {
+						$(this).removeClass(joined).addClass(options.stripeRows[i % stripeRows_length]);
+					});
+				}
+				
+				return this;
+			};
+			
+			this.strip_html = function (input) {
+				var output = input.replace(new RegExp('<[^<]+\>', 'g'), "");
+				output = $.trim(output.toLowerCase());
+				return output;
+			};
+			
+			this.results = function (bool) {
+				if (typeof options.noResults === "string" && options.noResults !== "") {
+					if (bool) {
+						$(options.noResults).hide();
+					} else {
+						$(options.noResults).show();
+					}
+				}
+				return this;
+			};
+			
+			this.loader = function (bool) {
+				if (typeof options.loader === "string" && options.loader !== "") {
+					 (bool) ? $(options.loader).show() : $(options.loader).hide();
+				}
+				return this;
+			};
+			
+			this.cache = function () {
+				
+				jq_results = $(target);
+				
+				if (typeof options.noResults === "string" && options.noResults !== "") {
+					jq_results = jq_results.not(options.noResults);
+				}
+				
+				var t = (typeof options.selector === "string") ? jq_results.find(options.selector) : $(target).not(options.noResults);
+				cache = t.map(function () {
+					return e.strip_html(this.innerHTML);
+				});
+				
+				rowcache = jq_results.map(function () {
+					return this;
+				});
+				
+				return this.go();
+			};
+			
+			this.trigger = function () {
+				this.loader(true);
+				options.onBefore();
+				
+				window.clearTimeout(timeout);
+				timeout = window.setTimeout(function () {
+					e.go();
+				}, options.delay);
+				
+				return this;
+			};
+			
+			this.cache();
+			this.results(true);
+			this.stripe();
+			this.loader(false);
+			
+			return this.each(function () {
+				$(this).bind(options.bind, function () {
+					val = $(this).val();
+					e.trigger();
+				});
+			});
+			
+		};
+	
+	}(jQuery, this, document));
+	</script>
+
+
+
+
+<script>
+	function setsearchmark(){
+	const instance = new Mark(document.querySelectorAll('#marque, #marque2'))
+	const matches = document.getElementById('matches')
+
+
+function highlight(word){
+
+  instance.unmark({
+    done: function(){
+
+      instance.mark(word, {
+        done: function(numberOfOccurrences){
+          matches.innerHTML = numberOfOccurrences
+        }
+      })
+    }
+  })
+}
+
+
+document
+  .getElementById('query')
+  .addEventListener('input', function(){
+    highlight(this.value)
+})
+	}
+
+	function setsearchmarkk(){
+	const instance = new Mark(document.querySelectorAll('#marque3, #marque4'))
+	const matches = document.getElementById('matchess')
+
+
+function highlight(word){
+
+  instance.unmark({
+    done: function(){
+
+      instance.mark(word, {
+        done: function(numberOfOccurrences){
+          matches.innerHTML = numberOfOccurrences
+        }
+      })
+    }
+  })
+}
+
+
+document
+  .getElementById('queryy')
+  .addEventListener('input', function(){
+    highlight(this.value)
+})
+}
+</script>
+<script type="text/javascript">
+	/* Criado por XinXyla#0001
+	*/
+	
+	   $(function () {
+		/*
+		Example 1
+		*/
+		$('input#id_search').quicksearch('table tbody tr');
+
+		/*
+		Example 2 
+		*/
+		$('input#id_search2').quicksearch('table tbody tr', {
+		 'delay': 300,
+		 'selector': 'button',
+		 'stripeRows': ['odd', 'even'],
+		 'loader': 'span.loading',
+		 'bind': 'keyup click',
+		 'show': function () {
+		  this.style.display = '';
+		 },
+		 'hide': function () {
+		  this.style.display = 'none';
+		 },
+		 'prepareQuery': function (val) {
+		  return new RegExp(val, "i");
+		 },
+		 'testQuery': function (query, txt, _row) {
+		  return query.test(txt);
+		 }
+		});
+		
+		/*
+		Example 3
+		*/
+		var qs = $('input#id_search_list').quicksearch('ul#list_example li');
+		
+		$.ajax({
+		 'url': 'example.json',
+		 'type': 'GET',
+		 'dataType': 'json',
+		 'success': function (data) {
+		  for (i in data['list_items']) {
+		   $('ul#list_example').append('<li>' + data['list_items'][i] + '</li>');
+		  }
+		  qs.cache();
+		 }
+		});
+		
+		$('input#add_to_list').click(function () {
+		 $('ul#list_example').append('<li>Added on click</li>');
+		 qs.cache();
+		});
+		
+	   });
+	  </script>
+	  <script>
+function xbuscador() {
+document.getElementById('xbuscador').style.display = 'block';
+document.getElementById('xmarcador').style.display = 'none';
+}
+function xmarcador() {
+document.getElementById('xbuscador').style.display = 'none';
+document.getElementById('xmarcador').style.display = 'block';
+}
+function ebuscador() {
+document.getElementById('ebuscador').style.display = 'block';
+document.getElementById('emarcador').style.display = 'none';
+}
+function emarcador() {
+document.getElementById('ebuscador').style.display = 'none';
+document.getElementById('emarcador').style.display = 'block';
+}
+	  </script>
+	  	  <script>
+			function buscaralvos(alvo) {
+			let input, indicador, div, buttons, i, txtValue;
+			input = document.getElementById('indicador');
+			indicador = input.value.toUpperCase();                      
+			div = document.getElementById(alvo);                              
+			buttons = div.getElementsByTagName('button');
+			for (i = 0; i < buttons.length; i++) {
+			const button = buttons[i];
+			txtValue = button.value || button.innerText;
+			if (txtValue.toUpperCase().indexOf(indicador) > -1) {
+			button.style.display = "";
+			} else {
+			button.style.display = "none";
+			}}}
+		
+			</script>
+	  	  <script>
+			function buscaralvose(alvo) {
+			let input, indicadore, div, buttons, i, txtValue;
+			input = document.getElementById('indicadore');
+			indicadore = input.value.toUpperCase();                      
+			div = document.getElementById(alvo);                              
+			buttons = div.getElementsByTagName('button');
+			for (i = 0; i < buttons.length; i++) {
+			const button = buttons[i];
+			txtValue = button.value || button.innerText;
+			if (txtValue.toUpperCase().indexOf(indicadore) > -1) {
+			button.style.display = "";
+			} else {
+			button.style.display = "none";
+			}}}
+		
+			</script>
+			 <script>
+				function buscaralvosc(alvo) {
+				let input, indicadorc, div, buttons, i, txtValue;
+				input = document.getElementById('indicadorc');
+				indicadorc = input.value.toUpperCase();                      
+				div = document.getElementById(alvo);                              
+				buttons = div.getElementsByTagName('button');
+				for (i = 0; i < buttons.length; i++) {
+				const button = buttons[i];
+				txtValue = button.value || button.innerText;
+				if (txtValue.toUpperCase().indexOf(indicadorc) > -1) {
+				button.style.display = "";
+				} else {
+				button.style.display = "none";
+				}}}
+			
+				</script>
+							 <script>
+								function buscaralvosce(alvo) {
+								let input, indicadorce, div, buttons, i, txtValue;
+								input = document.getElementById('indicadorce');
+								indicadorce = input.value.toUpperCase();                      
+								div = document.getElementById(alvo);                              
+								buttons = div.getElementsByTagName('button');
+								for (i = 0; i < buttons.length; i++) {
+								const button = buttons[i];
+								txtValue = button.value || button.innerText;
+								if (txtValue.toUpperCase().indexOf(indicadorce) > -1) {
+								button.style.display = "";
+								} else {
+								button.style.display = "none";
+								}}}
+							
+								</script>
+
+								
+			
+<style>
+.fundo {
+	position: fixed;
+	width: 100%;
+	height:100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%); /*center*/
+	z-index: -10;
+	background: rgba(0, 0, 0, 0.7);
+	background-size: contain;
+}
+.fundo2 {
+	position: fixed;
+	width: 150%;
+	height:150%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%); /*center*/
+	z-index: -10;
+	background-size: contain;
+}
+.fundoativo {
+	position: fixed;
+	top: 20px;
+	left: 1%;
+	width: 12px;
+	height:12px;
+	background: #000000;
+	background-size: contain;
+	transition: 0.4s ease-in-out;
+}
+</style>
+		<audio id="bot_onrun" preload=""><source src="sounds/bot_on.mp3" type="audio/mpeg"></audio>
+		<audio id="bot_offrun" preload=""><source src="sounds/bot_off.mp3" type="audio/mpeg"></audio>
+	</body>
+
+</html>
