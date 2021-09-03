@@ -49,7 +49,7 @@ module.exports = {
 	<div style="padding-top: 8px;">
 		Procurar textos incluso em algum item:<br>
 		<textarea id="item" rows="1" class="round" placeholder="Insira uma variável ou algum texto. Esses '' não são necessários!" style="width: 94%; font-family: monospace;  "></textarea>&&<br>
-		<textarea id="item2" rows="1" class="round" placeholder="Insira uma variável ou algum texto. Esses '' não são necessários!" style="width: 94%; font-family: monospace;  "></textarea>
+		<textarea id="item2" rows="1" class="round" placeholder="Deixe vazio caso não queira buscar um segundo texto isolado" style="width: 94%; font-family: monospace;  "></textarea>
 	</div><br>
 	<div style="padding-top: 8px;">
 		<div style="float: left; width: 35%;">
