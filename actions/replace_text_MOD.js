@@ -9,9 +9,9 @@ subtitle: function(data) {
 	return `${info[data.info]} "${data.text2}" por "${data.text3}" em "${data.text}"`;
 },
 	
-author: "iAmaury, EliteArtz & XinXyla",
+author: "XinXyla",
 
-version: "1.8.9",
+version: "1.0",
 
 short_description: "Substitua o texto por outro texto",
 
