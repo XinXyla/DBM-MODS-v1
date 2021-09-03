@@ -2,7 +2,7 @@ module.exports = {
 
 
 
-	name: "Procurar um texto incluso em um item da lista",
+	name: "Buscar um texto incluso na lista",
 	
 	section: "Lists and Loops",
 	
