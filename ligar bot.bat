@@ -1,6 +1,6 @@
 @echo off
-echo Starting..
+echo Iniciando o bot...
 :main
-node botB.js
-echo Restarting Bot..
+node bot.js
+echo Reiniciando o bot pois deu merda..
 goto main
