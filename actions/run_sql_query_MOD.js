@@ -34,7 +34,7 @@ module.exports = {
 
   html (isEvent, data) {
     return `
-<div id="wrexdiv" style="width: 550px; height: 350px; overflow-y: scroll;">
+
   <div>
     <p>
     Com este mod, você pode executar consultas SQL usando MySQL, MsSQL, postgres e SQLite.
@@ -159,7 +159,7 @@ module.exports = {
         <option value="0" selected="selected">Desabilitado</option>
       </select><br><br>
     </div>
-  </div>
+ 
 <style>
   .embed {
     position: relative;
