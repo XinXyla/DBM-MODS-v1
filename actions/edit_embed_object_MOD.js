@@ -17,7 +17,7 @@ module.exports = {
 
   html (isEvent, data) {
     return `
-<div style="width: 550px; height: 350px; overflow-y: scroll;">
+
   <div style="padding-top: 8px;">
     <div style="float: left; width: 35%;">
       Source Embed Object:<br>
@@ -67,9 +67,9 @@ module.exports = {
         <option value=2>Clear Content</option>
       </select>
     </div>
-    <div id="Input2" style="display: none; float: right; width: 60%;">
-      Description:<br>
-      <input id="description" class="round" type="text">
+    <div id="Input2" style="display: none; width: 100%;">
+    <br><br><br>Description:<br>
+      <textarea id="description" style="width:95%" type="text"></textarea>
     </div>
   </div><br><br><br>
   <div style="padding-top: 8px;">
@@ -179,9 +179,9 @@ module.exports = {
         <option value=2>Clear Content</option>
       </select>
     </div>
-    <div id="Input9" style="display: none; float: right; width: 60%;">
-      Footer:<br>
-      <input id="footer" class="round" type="text">
+    <div id="Input9" style="display: none;width: 100%;">
+    <br><br><br>Footer:<br>
+      <textarea id="footer" style="width:95%" type="text"></textarea>
     </div>
   </div><br><br><br>
   <div style="padding-top: 8px;">
@@ -230,15 +230,14 @@ module.exports = {
     </div>
   </div><br><br><br>
   <div id="Input13" style="display: none;">
-    <div style="float: left; width: 32%;">
+    <div style="width: 32%;">
       Edit Field Name:<br>
       <input id="fieldName" class="round" type="text"><br>
     </div>
-    <div style="padding-left: 3%; float: left; width: 32%;">
-      Edit Field Value:<br>
-      <input id="fieldDescription" class="round" type="text"><br>
-    </div>
-    <div style="padding-left: 3%; float: left; width: 32%;">
+    <div style="width: 32%;float:left">
+    Edit Field Value:<br>
+      <textarea id="fieldDescription" style="width:60%" type="text"></textarea></div>
+    <div style="float: right; width: 32%;">
       Edit Field Inline:<br>
       <select id="fieldInline" class="round">
         <option value=0 selected>Keep Inline</option>
@@ -247,7 +246,7 @@ module.exports = {
       </select><br>
     </div>
   </div>
-</div>`
+`
   },
 
   init () {
