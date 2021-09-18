@@ -17,7 +17,6 @@ module.exports = {
 
   html (isEvent, data) {
     return `
-<div><p>This action has been modified by DBM Mods.</p></div><br>
 <div>
   <div style="float: left; width: 35%;">
     Source Embed Object:<br>
@@ -26,36 +25,36 @@ module.exports = {
     </select>
   </div>
   <div id="varNameContainer" style="float: right; width: 60%;">
-    Variable Name:<br>
+  Nome da variável:<br>
     <input id="varName" class="round" type="text" list="variableList">
   </div><br><br><br>
-  <div style="float: left; padding-top: 4px; width: 42%; height: 30px">
-    Message Content:<br>
-    <input id="messageContent" class="round" type="text" placeholder="Leave blank to ignore...">
-  </div><br><br><br>
   <div style="padding-top: 8px; float: left; width: 35%;">
-    Send To:<br>
-    <select id="channel" class="round" onchange="glob.sendTargetChange(this, 'varNameContainer2')">
-      ${data.sendTargets[isEvent ? 1 : 0]}
-    </select>
-  </div>
-  <div id="varNameContainer2" style="display: none; float: right; width: 60%; padding-top: 8px">
-    Variable Name:<br>
-    <input id="varName2" class="round" type="text" list="variableList"><br>
-  </div><br><br><br><br>
+  Enviar para:<br>
+  <select id="channel" class="round" onchange="glob.sendTargetChange(this, 'varNameContainer2')">
+    ${data.sendTargets[isEvent ? 1 : 0]}
+  </select>
+</div>
+<div id="varNameContainer2" style="display: none; float: right; width: 60%; padding-top: 8px">
+Nome da variável:<br>
+  <input id="varName2" class="round" type="text" list="variableList"><br>
+</div><br><br><br><br>
+  <div style="padding-top: 4px">
+  Conteúdo da mensagem:<br>
+    <textarea id="messageContent" rows="5" type="text" style="width:95%" placeholder="Deixe em branco para ignorar"></textarea>
+  </div><br>
   <div style="float: left; width: 35%;">
-    Store Message Object In:<br>
+  Armazenar objeto em:<br>
     <select id="storage3" class="round" onchange="glob.variableChange(this, 'varNameContainer3')">
       ${data.variables[0]}
     </select>
   </div>
   <div id="varNameContainer3" style="display: ; float: right; width: 60%;">
-    Storage Variable Name:<br>
+  Nome da Variável:<br>
     <input id="varName3" class="round" type="text">
   </div><br><br><br>
   <div style="padding-top: 8px;">
     <div style="float: left; width: 35%;">
-      If Message Delivery Fails:<br>
+    Se a entrega falhar:<br>
       <select id="iffalse" class="round" onchange="glob.onChangeFalse(this)">
         <option value="0" selected>Continue Actions</option>
         <option value="1">Stop Action Sequence</option>
@@ -68,7 +67,7 @@ module.exports = {
       <span id="iffalseName">Action Number</span>:<br><input id="iffalseVal" class="round" type="text">
     </div>
   </div>
-</div>`
+</div><br><br><br>`
   },
 
   init () {
