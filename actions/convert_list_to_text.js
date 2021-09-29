@@ -35,10 +35,10 @@ subtitle: function(data) {
 //---------------------------------------------------------------------
 
 // Who made the mod (If not set, defaults to "DBM Mods")
-author: "DBM & TotallyNotTwo",
+author: "DBM & TotallyNotTwo & XinXyla",
 
 // The version of the mod (Defaults to 1.0.0)
-version: "1.9.2", //Added in 1.9.2
+version: "2.0.0", //Added in 1.9.2
 
 // A short description to show on the mod line for this mod (Must be on a single line)
 short_description: "Added more options to default action.",
@@ -88,49 +88,55 @@ fields: ["list", "varName", "start", "middle", "end", "storage", "varName2", "so
 
 html: function(isEvent, data) {
 	return `
-	<div><p>This action has been modified by DBM Mods.</p></div><br>
+	<div><p>Aperfeiçoado por XinXyla#0001</p></div><br>
 <div>
 	<div style="float: left; width: 35%;">
-		Source List:<br>
+		Fonte da Lista:<br>
 		<select id="list" class="round" onchange="glob.listChange(this, 'varNameContainer')">
 			${data.lists[isEvent ? 1 : 0]}
 		</select>
 	</div>
 	<div id="varNameContainer" style="display: none; float: right; width: 60%;">
-		Variable Name:<br>
+	Nome da variável:<br>
 		<input id="varName" class="round" type="text" list="variableList"><br>
 	</div><br><br><br>
 	<div>
-		Sort List:<br>
-		<select id="sort" class="round" style="width: 90%;">
-			<option value="0">Sort By Name</option>
-			<option value="1" selected>Don't Sort</option>
+	Classificar lista:<br>
+		<select id="sort" class="round" style="width: 94%;">
+		<option value="1" selected>Não classifique</option>
+		<option value="2">Ordenar números ordem crescente [0-9]</option>
+		<option value="3">Ordenar números ordem decrescente [9-0]</option>
+			<option value="0">Classificar por ordem alfabética [A-Z]</option>
+			<option value="4">Classificar por ordem alfabética reversa [Z-A]</option>
+			<option value="5">Classificar por comprimento [ordem crescente]</option>
+			<option value="6">Classificar por comprimento [ordem decrescente]</option>
+			
 		</select>
 	</div>
-</div><br><br>
-<div style="padding-top: 8px; display: table;">
+</div><br>
+<div style="display: table;width:97%">
 	<div style="display: table-cell;">
-		Start Characters:<br>
+		Inicio do item:<br>
 		<input id="start" class="round" type="text">
 	</div>
 	<div style="display: table-cell;">
-		Middle Characters:<br>
+		Meio do item:<br>
 		<input id="middle" class="round" type="text">
 	</div>
 	<div style="display: table-cell;">
-		End Characters:<br>
+		Final do item:<br>
 		<input id="end" class="round" type="text" value="\\n">
 	</div>
 </div><br>
 <div>
 	<div style="float: left; width: 35%;">
-		Store In:<br>
+		Armazenar em:<br>
 		<select id="storage" class="round">
 			${data.variables[1]}
 		</select>
 	</div>
 	<div id="varNameContainer2" style="float: right; width: 60%;">
-		Variable Name:<br>
+		Nome da Variável:<br>
 		<input id="varName2" class="round" type="text">
 	</div>
 </div>`
@@ -171,7 +177,23 @@ action: function(cache) {
 			break;
 		case 1:
 			break;
+		case 2:
+			list.sort((a ,b)=> a - b);
+			break;
+		case 3:
+			list.sort((a ,b)=> b - a);
+			break;
+		case 4:
+			list.reverse();
+			break;
+		case 5:
+			list.sort(function(a, b){return a.length - b.length});
+			break;
+		case 6:
+			list.sort(function(a, b){return b.length - a.length});
+			break;
 	}
+	
 			
 	const start = this.evalMessage(data.start, cache).replace('\\n', '\n');
 	const middle = this.evalMessage(data.middle, cache).replace('\\n', '\n');
