@@ -94,7 +94,7 @@ module.exports = {
 				list.sort((a ,b)=> b - a);
 				break;
 			case 4:
-				list.reverse();
+				list.sort().reverse();
 				break;
 			case 5:
 				list.sort(function(a, b){return a.length - b.length});
