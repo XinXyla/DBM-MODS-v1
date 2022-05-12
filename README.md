@@ -3,3 +3,6 @@
 # Discord Bot Maker - MODS - BRASIL
 
 Todas as actions presentes aqui serão traduzidas para o Português do Brasil
+
+Servidor do DBM Brasil
+https://discord.gg/KfrffKXxbb
